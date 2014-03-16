@@ -1,11 +1,13 @@
-class nginx {
+class nginx (
+  $ensure = 'latest'
+){
   $required = $::operatingsystem ? {
     /(?i-mx:centos|fedora|redhat|scientific)/ => 'nginx',
   }
 
   $paths = [ '/etc/nginx', '/etc/nginx/conf.d', '/var/log/nginx' ]
 
-  package { $required: ensure => latest }
+  package { $required: ensure => $ensure }
 
   file { $paths:
     ensure => directory,

@@ -10,6 +10,9 @@ Samples
 ```
 include nginx
 ```
+```
+nginx::service { 'default': ensure => running, enable => true }
+```
 
 License
 -------
