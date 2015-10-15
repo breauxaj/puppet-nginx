@@ -5,15 +5,22 @@ class nginx (
     /(?i-mx:centos|fedora|redhat|scientific)/ => 'nginx',
   }
 
-  $paths = [ '/etc/nginx', '/etc/nginx/conf.d', '/var/log/nginx' ]
+  $dist = $::operatingsystem ? {
+    /(?i-mx:centos)/ => 'centos',
+    /(?i-mx:redhat)/ => 'rhel',
+  }
 
-  package { $required: ensure => $ensure }
+  yumrepo { 'nginx':
+    baseurl        => "http://nginx.org/packages/${dist}/${::lsbmajdistrelease}/${::hardwaremodel}/",
+    failovermethod => 'priority',
+    enabled        => '1',
+    gpgcheck       => '0',
+    descr          => 'NGINX',
+  }
 
-  file { $paths:
-    ensure => directory,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
+  package { $required:
+    ensure  => $ensure,
+    require => Yumrepo['nginx'],
   }
 
 }
