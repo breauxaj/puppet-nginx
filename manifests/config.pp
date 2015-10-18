@@ -5,7 +5,7 @@ define nginx::config (
 
   $key = $title
 
-  $context = '/etc/nginx/nginx.conf'
+  $context = '/files/etc/nginx/nginx.conf'
 
   augeas { "nginx_conf/${key}":
     context => $context,
