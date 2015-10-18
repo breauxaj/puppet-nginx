@@ -12,11 +12,22 @@ include nginx
 ```
 ```
 nginx::config {
-  'worker_processes': value => '4';
+  'user':                       value => 'nginx';
+  'worker_processes':           value => '4';
+  'events/worker_connections':  value => '32768';
+  'events/multi_accept':        value => 'on';
+  'events/use':                 value => 'epoll';
+  'http/server_tokens':         value => 'off';
+  'http/sendfile':              value => 'on';
+  'http/tcp_nopush':            value => 'on';
+  'http/tcp_nodelay':           value => 'on';
+  'http/keepalive_timeout':     value => '60';
+  'http/gzip':                  value => 'on';
+  'http/gzip_disable':          value => '"MSIE [1-6]\.(?!.*SV1)"';
 }
 ```
 ```
-nginx::virtual { 'default':
+nginx::server { 'default':
 
 }
 ```
