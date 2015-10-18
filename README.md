@@ -28,7 +28,10 @@ nginx::config {
 ```
 ```
 nginx::server { 'default':
-
+  'server/listen':                      value => '80';
+  'server/server_name':                 value => 'localhost';
+  'server/access_log':                  value => '/var/log/nginx/log/host.access.log main';
+  'server/error_page 500 502 503 504':  value => '/50x.html';
 }
 ```
 ```
